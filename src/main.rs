@@ -92,7 +92,7 @@ async fn main() -> anyhow::Result<()> {
     //let external_address = "/ip4/127.0.0.1/tcp/0".parse::<Multiaddr>().unwrap();
     //swarm.add_external_address(external_address);
 
-    let listener_id = swarm.listen_on("/ip4/127.0.0.1/tcp/0".parse()?)?;
+    let listener_id = swarm.listen_on("/ip4/0.0.0.0/tcp/0".parse()?)?;
     tracing::info!("Listener id: {}", listener_id);
     swarm.dial(rendezvous_point_address.clone())?;
 
