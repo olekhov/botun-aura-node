@@ -79,7 +79,7 @@ async fn main() -> anyhow::Result<()> {
                 mdns::tokio::Behaviour::new(mdns::Config::default(), key.public().to_peer_id())?;
 
             let rendezvous = rendezvous::client::Behaviour::new(key.clone());
-            let ping = ping::Behaviour::new(ping::Config::new().with_interval(Duration::from_secs(1)));
+            let ping = ping::Behaviour::new(ping::Config::new().with_interval(Duration::from_secs(10)));
 
             Ok(MyBehaviour { gossipsub, rendezvous, mdns, ping })
 
@@ -208,6 +208,7 @@ async fn main() -> anyhow::Result<()> {
                         let mut peers = peers_set.lock().unwrap();
                         if let Some(peer_stat) = peers.get_mut(&peer) {
                             peer_stat.ping = Some(rtt.as_millis() as u64);
+                            peer_stat.last_seen = chrono::Local::now().timestamp();
                         }
                     }
 
