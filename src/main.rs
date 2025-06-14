@@ -87,11 +87,6 @@ async fn main() -> anyhow::Result<()> {
         .build()
         ;
 
-    // In production the external address should be the publicly facing IP address of the rendezvous
-    // point. This address is recorded in the registration entry by the rendezvous point.
-    //let external_address = "/ip4/127.0.0.1/tcp/0".parse::<Multiaddr>().unwrap();
-    //swarm.add_external_address(external_address);
-
     let listener_id = swarm.listen_on("/ip4/0.0.0.0/tcp/0".parse()?)?;
     tracing::info!("Listener id: {}", listener_id);
     swarm.dial(rendezvous_point_address.clone())?;
